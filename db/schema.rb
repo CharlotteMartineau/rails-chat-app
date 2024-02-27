@@ -10,7 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_11_13_105532) do
+ActiveRecord::Schema.define(version: 2024_02_27_094644) do
+
+  create_table "chatrooms", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "first_name"
@@ -19,7 +25,7 @@ ActiveRecord::Schema.define(version: 2023_11_13_105532) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "password_digest"
-    t.string "#<ActiveRecord::ConnectionAdapters::SQLite3::TableDefinition:0x000000010a96f3d8>"
+    t.string "#<ActiveRecord::ConnectionAdapters::SQLite3::TableDefinition:0x0000000105854f70>"
   end
 
 end

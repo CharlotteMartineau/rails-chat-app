@@ -5,4 +5,5 @@ Rails.application.routes.draw do
   post 'login' => 'sessions#login'
 
   resources :users
+  resources :chatrooms, only: %i[index show create update]
 end
