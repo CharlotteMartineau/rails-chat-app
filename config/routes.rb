@@ -5,5 +5,8 @@ Rails.application.routes.draw do
   post 'login' => 'sessions#login'
 
   resources :users
-  resources :chatrooms, only: %i[index show create update]
+
+  resources :chatrooms, only: %i[index show create update] do
+    resources :chatroom_memberships, only: %i[create destroy]
+  end
 end
