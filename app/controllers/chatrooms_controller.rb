@@ -1,8 +1,9 @@
 class ChatroomsController < ApplicationController
   before_action :set_chatroom!, only: %i[show update]
+  before_action :check_current_user_is_member!, only: %i[show update]
 
   def index
-    chatrooms = Chatroom.all
+    chatrooms = @current_user.members
 
     render json: chatrooms, each_serializer: ChatroomSerializer, status: 200
   end
@@ -32,6 +33,13 @@ class ChatroomsController < ApplicationController
   end
 
   private
+
+  def check_current_user_is_member!
+    return if chatroom.members.where(id: @current_user.id).first
+
+    render_error(code: 'USER_UNAUTHORIZED', message: 'Unauthorized user',
+                 status: 401)
+  end
 
   def chatroom
     @chatroom ||= Chatroom.where(id: params[:id]).first

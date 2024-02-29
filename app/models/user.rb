@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   before_save :downcase_email
 
   has_many :chatroom_memberships, dependent: :destroy
-  has_many :memberships, through: :chatroom_memberships, source: :chatroom
+  has_many :members, through: :chatroom_memberships, source: :chatroom
 
   validates :first_name, :last_name, presence: true
   validates :email, uniqueness: true, presence: true # allow_nil: true

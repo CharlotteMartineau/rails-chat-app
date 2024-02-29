@@ -9,12 +9,28 @@ RSpec.describe ChatroomsController, type: :controller do
     { name: '' }
   end
 
-  let!(:chatroom1) do
-    Chatroom.create(name: "Paul's birthday")
+  let!(:user1) do
+    FactoryBot.create(:user)
   end
 
   let!(:user2) do
     FactoryBot.create(:user, first_name: 'Henri', last_name: 'Charles', email: 'henri-charles@mail.fr')
+  end
+
+  let!(:chatroom1) do
+    Chatroom.create(name: "Paul's birthday")
+  end
+
+  let!(:chatroom2) do
+    Chatroom.create(name: 'Week end copains')
+  end
+
+  let!(:chatroom_membership) do
+    chatroom1.chatroom_memberships.create!(user: user2)
+  end
+
+  let!(:chatroom_membership2) do
+    chatroom2.chatroom_memberships.create!(user: user1)
   end
 
   let(:result) { JSON.parse(response.body) }
@@ -26,6 +42,7 @@ RSpec.describe ChatroomsController, type: :controller do
       end
       it { expect(response.status).to eq(200) }
       it { expect(result['chatrooms'][0]['name']).to eq("Paul's birthday") }
+      it { expect(result['chatrooms'].count).to eq(1) }
     end
   end
 
@@ -48,6 +65,12 @@ RSpec.describe ChatroomsController, type: :controller do
       before { get :show, params: { id: 342, token: user2.token }, format: :json }
       it { expect(response.status).to eq(404) }
       it { expect(result['error']['message']).to eq('Can not find chatroom') }
+    end
+
+    context 'unauthorized user' do
+      before { get :show, params: { id: chatroom2.id, token: user2.token }, format: :json }
+      it { expect(response.status).to eq(401) }
+      it { expect(result['error']['message']).to eq('Unauthorized user') }
     end
   end
 
