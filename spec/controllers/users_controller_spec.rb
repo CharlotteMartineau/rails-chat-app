@@ -98,44 +98,44 @@ RSpec.describe UsersController, type: :controller do
     context 'missing first name' do
       before { post :create, params: { user: no_first_name_attributes }, format: :json }
       it { expect(response.status).to eq(400) }
-      it { expect(JSON.parse(response.body)['error']['message']).to include("First name can't be blank") }
+      it { expect(result['error']['message']).to include("First name can't be blank") }
     end
 
     context 'missing last name' do
       before { post :create, params: { user: no_last_name_attributes }, format: :json }
       it { expect(response.status).to eq(400) }
-      it { expect(JSON.parse(response.body)['error']['message']).to include("Last name can't be blank") }
+      it { expect(result['error']['message']).to include("Last name can't be blank") }
     end
 
     context 'missing email' do
       before { post :create, params: { user: no_email_attributes }, format: :json }
       it { expect(response.status).to eq(400) }
-      it { expect(JSON.parse(response.body)['error']['message']).to include("Email can't be blank") }
+      it { expect(result['error']['message']).to include("Email can't be blank") }
     end
 
     context 'email uniqueness' do
       before { post :create, params: { user: no_unique_email_attributes }, format: :json }
       it { expect(response.status).to eq(400) }
-      it { expect(JSON.parse(response.body)['error']['message']).to include('Email has already been taken') }
+      it { expect(result['error']['message']).to include('Email has already been taken') }
     end
 
     context 'email format' do
       before { post :create, params: { user: wrong_email_format }, format: :json }
       it { expect(response.status).to eq(400) }
-      it { expect(JSON.parse(response.body)['error']['message']).to include('Email is invalid') }
+      it { expect(result['error']['message']).to include('Email is invalid') }
     end
 
     context 'missing password' do
       before { post :create, params: { user: no_password_attributes }, format: :json }
       it { expect(response.status).to eq(400) }
-      it { expect(JSON.parse(response.body)['error']['message']).to include("Password can't be blank") }
+      it { expect(result['error']['message']).to include("Password can't be blank") }
     end
 
     context 'wrong password confirmation' do
       before { post :create, params: { user: wrong_password_confirmation }, format: :json }
       it { expect(response.status).to eq(400) }
       it {
-        expect(JSON.parse(response.body)['error']['message']).to include("Password confirmation doesn't match Password")
+        expect(result['error']['message']).to include("Password confirmation doesn't match Password")
       }
     end
   end
@@ -155,7 +155,7 @@ RSpec.describe UsersController, type: :controller do
     context 'wrong id' do
       before { put :update, params: { id: 342, token: user2.token, user: valid_attributes }, format: :json }
       it { expect(response.status).to eq(404) }
-      it { expect(JSON.parse(response.body)['error']['message']).to eq('Can not find user') }
+      it { expect(result['error']['message']).to eq('Can not find user') }
     end
 
     context 'wrong password confirmation' do
@@ -165,7 +165,7 @@ RSpec.describe UsersController, type: :controller do
       end
       it { expect(response.status).to eq(400) }
       it {
-        expect(JSON.parse(response.body)['error']['message']).to include("Password confirmation doesn't match Password")
+        expect(result['error']['message']).to include("Password confirmation doesn't match Password")
       }
     end
   end
@@ -182,7 +182,7 @@ RSpec.describe UsersController, type: :controller do
     context 'wrong id' do
       before { delete :destroy, params: { id: 342, token: user2.token }, format: :json }
       it { expect(response.status).to eq(404) }
-      it { expect(JSON.parse(response.body)['error']['message']).to eq('Can not find user') }
+      it { expect(result['error']['message']).to eq('Can not find user') }
     end
   end
 end

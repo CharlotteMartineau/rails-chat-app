@@ -84,7 +84,7 @@ RSpec.describe ChatroomsController, type: :controller do
     context 'missing name' do
       before { post :create, params: { token: user2.token, chatroom: no_name_attributes }, format: :json }
       it { expect(response.status).to eq(400) }
-      it { expect(JSON.parse(response.body)['error']['message']).to include("Name can't be blank") }
+      it { expect(result['error']['message']).to include("Name can't be blank") }
     end
   end
 
@@ -101,7 +101,7 @@ RSpec.describe ChatroomsController, type: :controller do
     context 'wrong id' do
       before { put :update, params: { id: 342, token: user2.token, chatroom: valid_attributes }, format: :json }
       it { expect(response.status).to eq(404) }
-      it { expect(JSON.parse(response.body)['error']['message']).to eq('Can not find chatroom') }
+      it { expect(result['error']['message']).to eq('Can not find chatroom') }
     end
   end
 end

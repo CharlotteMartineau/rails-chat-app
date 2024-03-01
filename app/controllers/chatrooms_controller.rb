@@ -3,13 +3,13 @@ class ChatroomsController < ApplicationController
   before_action :check_current_user_is_member!, only: %i[show update]
 
   def index
-    chatrooms = @current_user.members
+    chatrooms = @current_user.memberships
 
     render json: chatrooms, each_serializer: ChatroomSerializer, status: 200
   end
 
   def show
-    render json: chatroom, serializer: ChatroomSerializer, include_members: true, status: 200
+    render json: chatroom, serializer: ChatroomSerializer, include_members: true, include_messages: true, status: 200
   end
 
   def create

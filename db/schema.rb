@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_02_27_155127) do
+ActiveRecord::Schema.define(version: 2024_02_29_100121) do
 
   create_table "chatroom_memberships", force: :cascade do |t|
     t.integer "user_id", null: false
@@ -27,6 +27,16 @@ ActiveRecord::Schema.define(version: 2024_02_27_155127) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "messages", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "chatroom_id", null: false
+    t.text "content"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["chatroom_id"], name: "index_messages_on_chatroom_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
@@ -39,4 +49,6 @@ ActiveRecord::Schema.define(version: 2024_02_27_155127) do
 
   add_foreign_key "chatroom_memberships", "chatrooms"
   add_foreign_key "chatroom_memberships", "users"
+  add_foreign_key "messages", "chatrooms"
+  add_foreign_key "messages", "users"
 end

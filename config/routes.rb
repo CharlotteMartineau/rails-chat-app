@@ -8,5 +8,8 @@ Rails.application.routes.draw do
 
   resources :chatrooms, only: %i[index show create update] do
     resources :chatroom_memberships, only: %i[create destroy]
+    resources :messages, only: [:create]
   end
+
+  resources :messages, only: [:destroy]
 end

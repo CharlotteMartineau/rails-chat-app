@@ -46,7 +46,7 @@ RSpec.describe ChatroomMembershipsController, type: :controller do
         post :create, params: { token: user2.token, chatroom_id: 12, user_ids: [user1.id] }, format: :json
       end
       it { expect(response.status).to eq(404) }
-      it { expect(JSON.parse(response.body)['error']['message']).to eq('Can not find chatroom') }
+      it { expect(result['error']['message']).to eq('Can not find chatroom') }
     end
 
     context 'user already member' do
@@ -73,7 +73,7 @@ RSpec.describe ChatroomMembershipsController, type: :controller do
     context 'wrong chatroom id' do
       before { delete :destroy, params: { token: user2.token, chatroom_id: 14, id: 1 }, format: :json }
       it { expect(response.status).to eq(404) }
-      it { expect(JSON.parse(response.body)['error']['message']).to eq('Can not find chatroom') }
+      it { expect(result['error']['message']).to eq('Can not find chatroom') }
     end
   end
 end
