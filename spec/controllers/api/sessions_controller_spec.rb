@@ -1,12 +1,12 @@
 require 'rails_helper'
 
-RSpec.describe SessionsController, type: :controller do
+RSpec.describe Api::SessionsController, type: :controller do
   let(:user) { FactoryBot.create(:user) }
 
   let(:result) { JSON.parse(response.body) }
 
   def user_to_json_response(instance_user)
-    JSON.parse(UserBaseSerializer.new(instance_user, { include_token: true }).to_json)
+    JSON.parse(Api::UserBaseSerializer.new(instance_user, { include_token: true }).to_json)
   end
 
   describe 'POST #login with email/password' do

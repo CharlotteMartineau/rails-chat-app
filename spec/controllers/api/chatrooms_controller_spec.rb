@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ChatroomsController, type: :controller do
+RSpec.describe Api::ChatroomsController, type: :controller do
   let(:valid_attributes) do
     { name: "Jane's birthday" }
   end

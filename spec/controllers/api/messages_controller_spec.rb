@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe MessagesController, type: :controller do
+RSpec.describe Api::MessagesController, type: :controller do
   let!(:user1) do
     FactoryBot.create(:user)
   end

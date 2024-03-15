@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ChatroomMembershipsController, type: :controller do
+RSpec.describe Api::ChatroomMembershipsController, type: :controller do
   let!(:user1) do
     FactoryBot.create(:user)
   end
