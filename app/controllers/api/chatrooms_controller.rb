@@ -6,7 +6,7 @@ module Api
     def index
       chatrooms = @current_user.memberships
 
-      render json: chatrooms, each_serializer: Api::ChatroomSerializer, status: 200
+      render json: chatrooms, each_serializer: Api::ChatroomSerializer, include_members: true, status: 200
     end
 
     def show

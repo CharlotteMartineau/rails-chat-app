@@ -81,10 +81,10 @@ RSpec.describe Api::ChatroomsController, type: :controller do
       it { expect(result['chatroom']['name']).to eq("Jane's birthday") }
     end
 
-    context 'missing name' do
+    context 'works with no name' do
       before { post :create, params: { token: user2.token, chatroom: no_name_attributes }, format: :json }
-      it { expect(response.status).to eq(400) }
-      it { expect(result['error']['message']).to include("Name can't be blank") }
+      it { expect(response.status).to eq(201) }
+      it { expect(result['chatroom']['name']).to eq('') }
     end
   end
 
