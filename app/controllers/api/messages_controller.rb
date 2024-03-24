@@ -6,6 +6,7 @@ module Api
       message = @current_user.messages.new(message_params)
 
       if message.save
+        ActionCable.server.broadcast chatroom.id, Api::MessageSerializer.new(message).as_json
         render json: message, serializer: Api::MessageSerializer, status: 201
       else
         render_error(code: 'CAN_NOT_CREATE_MESSAGE',
