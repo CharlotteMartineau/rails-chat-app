@@ -3,13 +3,13 @@ module Api
     before_action :set_chatroom!, only: %i[create destroy]
 
     def create
-      users = User.where(id: params.require([:user_ids]))
-
-      users.each do |user|
+      emails = params[:user_emails]
+      emails.each do |email|
+        user = User.where(email:).first
         chatroom.chatroom_memberships.create!(user:)
       end
 
-      render json: chatroom, serializer: Api::ChatroomSerializer, include_members: true, status: 201
+      render json: chatroom, serializer: Api::ChatroomSerializer, status: 201
     rescue ActiveRecord::RecordInvalid => e
       render_error(code: 'CAN_NOT_CREATE_CHATROOM_MEMBERSHIP',
                    message: "Can not create chatroom membership : #{e}", status: 400)
@@ -17,7 +17,7 @@ module Api
 
     def destroy
       membership.destroy
-      render json: chatroom, serializer: Api::ChatroomSerializer, include_members: true, status: 200
+      render json: chatroom, serializer: Api::ChatroomSerializer, status: 200
     end
 
     private

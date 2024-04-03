@@ -6,11 +6,11 @@ module Api
     def index
       chatrooms = @current_user.memberships
 
-      render json: chatrooms, each_serializer: Api::ChatroomSerializer, include_members: true, status: 200
+      render json: chatrooms, each_serializer: Api::ChatroomSerializer, status: 200
     end
 
     def show
-      render json: chatroom, serializer: Api::ChatroomSerializer, include_members: true, include_messages: true,
+      render json: chatroom, serializer: Api::ChatroomSerializer, include_messages: true,
              status: 200
     end
 
@@ -18,7 +18,7 @@ module Api
       chatroom = Chatroom.new(chatroom_params)
 
       if chatroom.save
-        render json: chatroom, serializer: Api::ChatroomSerializer, include_members: true, status: 201
+        render json: chatroom, serializer: Api::ChatroomSerializer, status: 201
       else
         render_error(code: 'CAN_NOT_CREATE_CHATROOM',
                      message: "Can not create chatroom : #{chatroom.errors.full_messages}", status: 400)
@@ -27,7 +27,7 @@ module Api
 
     def update
       if chatroom.update(chatroom_params)
-        render json: chatroom, serializer: Api::ChatroomSerializer, include_members: true, status: 200
+        render json: chatroom, serializer: Api::ChatroomSerializer, status: 200
       else
         render_error(code: 'CAN_NOT_UPDATE_CHATROOM',
                      message: "Can not update chatroom : #{chatroom.errors.full_messages}", status: 400)
